@@ -27,3 +27,16 @@ def create_program(program: ProgramCreate):
         days_per_week=program.days_per_week)
     fake_db.append(new_program)
     return new_program
+
+@app.delete("/programs/{program_id}")
+def delete_program(program_id: str):
+    for i, program in enumerate(fake_db):
+        if program.id == program_id:
+            deleted_program = fake_db.pop(i)
+            return deleted_program
+    raise HTTPException(status_code=404, detail="program not found")
+
+
+@app.get("/programs")
+def get_programs():
+    return fake_db
