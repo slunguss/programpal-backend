@@ -1,9 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uuid
+from database import engine
+from models import Base
 
 app = FastAPI()
-fake_db = []
+Base.metadata.create_all(bind=engine)
 
 class ProgramCreate(BaseModel):
     name: str
